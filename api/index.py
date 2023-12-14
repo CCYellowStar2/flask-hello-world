@@ -13,7 +13,7 @@ def home():
     p = request.args.get('p', default= 1, type=int)
     url = 'https://api.bilibili.com/x/web-interface/view/detail'
     params = {'bvid': bv}
-    max_retries = 5
+    max_retries = 10
     retry_count = 0
     cid=""
     title=""
