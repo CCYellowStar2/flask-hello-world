@@ -1,5 +1,6 @@
 from flask import Flask
 import json
+import requests
 
 app = Flask(__name__)
 
@@ -13,7 +14,7 @@ def home():
     
     if response.status_code == 200:
         json_data = response.json()
-        cid = json_data["data"]["pages"][p-1]["cid"]
+        cid = json_data["data"]["View"]["pages"][p-1]["cid"]
         return cid
     else:
         return f"Failed to fetch data. Status code: {response.status_code}"
