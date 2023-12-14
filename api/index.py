@@ -11,7 +11,7 @@ def home():
     p = request.args.get('p', default= 1, type=int)
     url = 'https://api.bilibili.com/x/web-interface/view/detail'
     params = {'bvid': bv}
-    max_retries = 3
+    max_retries = 5
     retry_count = 0
     while retry_count < max_retries:
         response = requests.get(url, params=params)
