@@ -30,8 +30,11 @@ def home():
             if response2.status_code == 200:
                 root = ET.fromstring(response2.content)
                 for d in root.findall('d'):
-                    p_value = d.attrib['p']
-                    text = d.text                
+                    d_elements = [(d.attrib['p'], d.text) for d in root.findall('d')]
+                    sorted_d_elements = sorted(d_elements, key=lambda x: float(x[0].split(',')[0]))
+                for p_value, text_value in sorted_d_elements:
+                    print(p_value, text_value)
+                return "ok"
             else:
                 print(f"Failed to fetch data. Status code: {response2.status_code}. Retrying...")
                 retry_count += 1
