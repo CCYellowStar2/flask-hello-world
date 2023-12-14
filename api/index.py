@@ -15,6 +15,7 @@ def home():
     if response.status_code == 200:
         json_data = response.json()
         cid = json_data["data"]["View"]["pages"][p-1]["cid"]
+        print(cid)
         return cid
     else:
         return f"Failed to fetch data. Status code: {response.status_code}"
