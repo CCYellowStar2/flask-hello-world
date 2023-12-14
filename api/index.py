@@ -15,6 +15,8 @@ def home():
     max_retries = 5
     retry_count = 0
     cid=""
+    title=""
+    owner=""
     
     while retry_count < max_retries:
         if not cid:
@@ -23,6 +25,8 @@ def home():
         if cid or response.status_code == 200:
             if not cid:
                 json_data = response.json()
+                title= json_data["data"]["View"]["title"]
+                owner= json_data["data"]["View"]["owner"]["name"]
                 cid = json_data["data"]["View"]["pages"][p-1]["cid"]
                 print(cid)
             url2= f"https://comment.bilibili.com/{cid}.xml"
@@ -32,9 +36,14 @@ def home():
                 for d in root.findall('d'):
                     d_elements = [(d.attrib['p'], d.text) for d in root.findall('d')]
                     sorted_d_elements = sorted(d_elements, key=lambda x: float(x[0].split(',')[0]))
-                for p_value, text_value in sorted_d_elements:
-                    print(p_value, text_value)
-                return "ok"
+                result = {
+                    "code": 200,
+                    "title": title,
+                    "owner": owner,
+                    "data": sorted_d_elements
+                }
+                json_data2 = json.dumps(result, ensure_ascii=False)
+                return json_data2
             else:
                 print(f"Failed to fetch data. Status code: {response2.status_code}. Retrying...")
                 retry_count += 1
