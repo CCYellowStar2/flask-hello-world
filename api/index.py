@@ -3,6 +3,7 @@ import json
 import requests
 import time
 import xml.etree.ElementTree as ET
+import numpy as np
 
 app = Flask(__name__)
 
@@ -33,9 +34,22 @@ def home():
             response2 = requests.get(url2)
             if response2.status_code == 200:
                 root = ET.fromstring(response2.content)
+                p_values = []
+                p_p = []
+                text_values = []
                 for d in root.findall('d'):
-                    d_elements = [(d.attrib['p'], d.text) for d in root.findall('d')]
-                    sorted_d_elements = sorted(d_elements, key=lambda x: float(x[0].split(',')[0]))
+                    p, text = d.attrib['p'], d.text
+                    p_values.append(float(p.split(',')[0]))
+                    p_p.append(p)
+                    text_values.append(text)
+            
+                # 对p的值进行排序并获取排序的索引
+                sorted_indices = np.argsort(p_values)
+            
+                # 根据排序后的索引重新排列p的值和文本内容
+                sorted_p_values = np.array(p_p)[sorted_indices]
+                sorted_text_values = np.array(text_values)[sorted_indices]
+                sorted_d_elements = list(zip(sorted_p_values, sorted_text_values))
                 result = {
                     "code": 200,
                     "title": title,
