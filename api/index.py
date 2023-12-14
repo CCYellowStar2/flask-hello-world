@@ -28,7 +28,7 @@ def home():
             url2= f"https://comment.bilibili.com/{cid}.xml"
             response2 = requests.get(url2)
             if response2.status_code == 200:
-                root = ET.fromstring(xml_data)
+                root = ET.fromstring(response2.content)
                 for d in root.findall('d'):
                     p_value = d.attrib['p']
                     text = d.text                
