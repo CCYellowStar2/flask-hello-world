@@ -33,28 +33,25 @@ def home():
             url2= f"https://comment.bilibili.com/{cid}.xml"
             response2 = requests.get(url2)
             if response2.status_code == 200:
-                root = ET.fromstring(response2.content)
-                p_values = []
-                p_p = []
-                text_values = []
-                for d in root.findall('d'):
-                    p, text = d.attrib['p'], d.text
-                    p_values.append(float(p.split(',')[0]))
-                    p_p.append(p)
-                    text_values.append(text)
+                root = ET.fromstring(response.content)
+                # 为每个条目创建一个特征元组，包括p和文本值
+                entries = [(d.attrib['p'], d.text) for d in root.findall('d')]
             
-                # 对p的值进行排序并获取排序的索引
-                sorted_indices = np.argsort(p_values)
+                # 提取每个条目的第一个和第二个逗号前的数字
+                p_values = np.array([entry[0] for entry in entries])
+                first_comma_values = np.array([float(p.split(',')[0]) for p in p_values])
+                second_comma_values = np.array([float(p.split(',')[1]) for p in p_values])
             
-                # 根据排序后的索引重新排列p的值和文本内容
-                sorted_p_values = np.array(p_p)[sorted_indices]
-                sorted_text_values = np.array(text_values)[sorted_indices]
-                sorted_d_elements = list(zip(sorted_p_values, sorted_text_values))
+                # 对于相同的第一个逗号前的数字，按照第二个逗号前的数字排序
+                sorted_indices = np.lexsort((second_comma_values, first_comma_values))
+            
+                # 输出排序后的结果
+                sorted_entries = np.array(entries)[sorted_indices]
                 result = {
                     "code": 200,
                     "title": title,
                     "owner": owner,
-                    "data": sorted_d_elements
+                    "data": sorted_entries.tolist()
                 }
                 json_data2 = json.dumps(result, ensure_ascii=False)
                 return json_data2
