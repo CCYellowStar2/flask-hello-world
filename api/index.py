@@ -47,12 +47,12 @@ def home():
             
                 # 输出排序后的结果
                 sorted_entries = np.array(entries)[sorted_indices]
-                comments_list = [comment[1] for comment in sorted_entries]
+                comments_list = [{"comments": [comment[0], comment[1]]} for comment in sorted_entries]
                 result = {
                     "code": 200,
                     "title": title,
                     "owner": owner,
-                    "data": [{"comments": comments_list}]
+                    "data": comments_list
                 }
                 json_data2 = json.dumps(result, ensure_ascii=False)
                 return json_data2
