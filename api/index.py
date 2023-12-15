@@ -33,7 +33,7 @@ def home():
             url2= f"https://comment.bilibili.com/{cid}.xml"
             response2 = requests.get(url2)
             if response2.status_code == 200:
-                root = ET.fromstring(response.content)
+                root = ET.fromstring(response2.content)
                 # 为每个条目创建一个特征元组，包括p和文本值
                 entries = [(d.attrib['p'], d.text) for d in root.findall('d')]
             
