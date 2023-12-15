@@ -47,7 +47,7 @@ def home():
             
                 # 输出排序后的结果
                 sorted_entries = np.array(entries)[sorted_indices]
-                comments_list = [{"comments": [{"info": comment[0], "text": comment[1]}} for comment in sorted_entries]
+                comments_list = [{"comments": {"info": comment[0], "text": comment[1]}} for comment in sorted_entries]
                 result = {
                     "code": 200,
                     "title": title,
