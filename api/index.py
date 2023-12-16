@@ -61,6 +61,7 @@ def home():
                     "title": title,
                     "owner": owner,
                     "bv": bv,
+                    "p": p,
                     "data": comments_list,
                     "pages": page
                 }
