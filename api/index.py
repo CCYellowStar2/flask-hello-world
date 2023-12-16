@@ -24,6 +24,7 @@ def home():
     cid=""
     title=""
     owner=""
+    page=[]
     
     while retry_count < max_retries:
         if not cid:
@@ -35,6 +36,7 @@ def home():
                 title= json_data["data"]["View"]["title"]
                 owner= json_data["data"]["View"]["owner"]["name"]
                 cid = json_data["data"]["View"]["pages"][p-1]["cid"]
+                page = json_data["data"]["View"]["pages"]
                 print(cid)
             url2= f"https://comment.bilibili.com/{cid}.xml"
             response2 = requests.get(url2, headers=headers)
@@ -58,7 +60,8 @@ def home():
                     "code": 200,
                     "title": title,
                     "owner": owner,
-                    "data": comments_list
+                    "data": comments_list,
+                    "pages": page
                 }
                 json_data2 = json.dumps(result, ensure_ascii=False)
                 return json_data2
