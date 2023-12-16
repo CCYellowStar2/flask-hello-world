@@ -60,6 +60,7 @@ def home():
                     "code": 200,
                     "title": title,
                     "owner": owner,
+                    "bv": bv,
                     "data": comments_list,
                     "pages": page
                 }
