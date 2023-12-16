@@ -35,7 +35,7 @@ def home():
                 json_data = response.json()
                 title= json_data["data"]["View"]["title"]
                 owner= json_data["data"]["View"]["owner"]["name"]
-                cid = json_data["data"]["View"]["pages"][p-1]["cid"]
+                cid = json_data["data"]["View"]["pages"][int(p)-1]["cid"]
                 page = json_data["data"]["View"]["pages"]
                 print(cid)
             url2= f"https://comment.bilibili.com/{cid}.xml"
@@ -61,7 +61,7 @@ def home():
                     "title": title,
                     "owner": owner,
                     "bv": bv,
-                    "p": p,
+                    "p": str(p),
                     "data": comments_list,
                     "pages": page
                 }
