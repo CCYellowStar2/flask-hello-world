@@ -85,6 +85,14 @@ def live():
     url = f'https://api.live.bilibili.com/room/v1/Room/get_info?room_id={id}'
     response = requests.get(url, headers=headers)
     json_data = response.json()
+    uid = json_data[data][uid]
+    url2 = f"https://api.live.bilibili.com/live_user/v1/Master/info?uid={uid}"
+    response2 = requests.get(url2, headers=headers)
+    json_data2 = response2.json()
+    uname = json_data2[data][info][uname]
+        # 在原始JSON中插入新的键值对
+    json_data["data"]["uname"] = uname
+
     return json_data
 
 @app.route('/search')
