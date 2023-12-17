@@ -90,7 +90,7 @@ def search():
     return json_data
 
 @app.route('/live/search')
-def search():
+def livesearch():
     keyword = request.args.get('keyword')
     page = request.args.get('page', default= "1")
     url = f'https://api.bilibili.com/x/web-interface/wbi/search/type?search_type=live_room&keyword={keyword}&page={page}'
