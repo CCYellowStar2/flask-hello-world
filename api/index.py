@@ -116,7 +116,7 @@ def livesearch():
 @app.route('/index')
 def index():
     page = request.args.get('page', default= "1")
-    url = f'https://api.bilibili.com/x/web-interface/index/top/rcmd'
+    url = f'https://api.bilibili.com/x/web-interface/index/top/rcmd?ps=20'
     response = requests.get(url, headers=headers)
     json_data = response.json()
     return json_data
